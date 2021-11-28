@@ -38,15 +38,18 @@ public class prueba1 {
             	
             	ps = cn.prepareStatement(st_ins);
             	
-            	String nombre = "ssssssssssss"; //object.get("documentName").toString();  
+            	
+            	
+            	
+            	String nombre = object.get("documentName").toString();  
             	String tipo = "publico";  
             	String direccion = object.get("address").toString();
-            	String codPostal = object.get("postalcode").toString();
+            	String codPostal = object.get("postalcode").toString().replace(".","");
             	Float longitud = Float.valueOf(object.get("lonwgs84").toString());
             	Float latitud = Float.valueOf(object.get("latwgs84").toString());
-            	Integer telefono = 11111111; //Integer.valueOf( object.get("phone").toString());
-            	String email = object.get("email").toString();
-            	String descripcion = "ssssssssssssssssss" ; //object.get("documentDescription").toString();
+            	String telefono = object.get("phone").toString();
+            	String email = object.get("email").toString();	
+            	String descripcion = object.get("documentDescription").toString();
             	
             	ps.setString(1,nombre);
             	ps.setString(2,tipo);
@@ -54,7 +57,7 @@ public class prueba1 {
             	ps.setString(4,codPostal);
             	ps.setFloat(5,longitud);
             	ps.setFloat(6,latitud);
-            	ps.setInt(7,telefono);
+            	ps.setString(7,telefono);
             	ps.setString(8,email);
             	ps.setString(9,descripcion);
             	
