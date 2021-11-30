@@ -38,9 +38,17 @@ public class XMLtoJSON {
 	     
 		 try {
 	            JSONParser parser = new JSONParser();
-	            Object obj = parser.parse(new FileReader(JSONpath2));
+	            JSONObject objXML = (JSONObject)parser.parse(new FileReader(JSONpath2));
+	            String response = "response";
+	            String row = "row";
+	            objXML = (JSONObject) objXML.remove(response);
+	            objXML = (JSONObject) objXML.remove(row);
+	            FileWriter fileWriter = new FileWriter("C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\bibliotequesNEW2.json");
+	            fileWriter.write((objXML.remove(row)).toString());
+	            fileWriter.close();
+	            
 	            JSONArray json = new JSONArray();
-	            json.add(obj);
+	            json.add(objXML);
 	            
 	            cn = conexion.conectar();
 	            stm = cn.createStatement();
@@ -52,7 +60,7 @@ public class XMLtoJSON {
 	                 		+ " VALUES (?,?,?,?,?,?,?,?,?)";
 	            	ps = cn.prepareStatement(st_ins);
 	            	System.out.println(object.keySet());
-	            	String nombre = object.get("documentName").toString();  
+	            	String nombre = object.get("nom").toString();  
 	            	String tipo = "publico";  
 	            	String direccion = object.get("address").toString();
 	            	String codPostal = object.get("postalcode").toString().replace(".","");

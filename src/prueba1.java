@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.PreparedStatement;
 
 import org.json.simple.JSONArray;
@@ -58,17 +59,22 @@ public class prueba1 {
             	ps.executeUpdate();
             	//localidad
             	String nombreL = object.get("municipality").toString(); 
-            	String cod = object.get("postalcode").toString().replace(".","").substring(2,4);
-            	if(ThisKExists(nombreL) == false) {
+            	String cod = object.get("postalcode").toString().replace(".","").substring(2);
             	String st_ins2 = "INSERT INTO localidad(nombre,codigo)"
                  		+ " VALUES (?,?)";
             	ps = cn.prepareStatement(st_ins2);
             	ps.setString(1,nombreL);
             	ps.setString(2,cod);
             	ps.executeUpdate();
-            	}
             	//municipio
-            	
+            	String nombreM = object.get("territory").toString(); 
+            	String codM = object.get("postalcode").toString().replace(".","").substring(0,2);
+            	String st_ins3 = "INSERT INTO provincia(nombre,codigo)"
+                 		+ " VALUES (?,?)";
+            	ps = cn.prepareStatement(st_ins3);
+            	ps.setString(1,nombreM);
+            	ps.setString(2,codM);
+            	ps.executeUpdate();
             }
             
        	}catch (Exception ex) {
@@ -82,12 +88,5 @@ public class prueba1 {
         }
     	System.out.println("OK");
     }
-    public static boolean ThisKExists(String nombreL) {
-    	boolean b = true;
-    	
-    	
-    	
-    	
-    	return b;
-    }
+    
 }
