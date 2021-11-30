@@ -44,7 +44,7 @@ public class prueba1 {
             	String codPostal = object.get("postalcode").toString().replace(".","");
             	Float longitud = Float.valueOf(object.get("lonwgs84").toString());
             	Float latitud = Float.valueOf(object.get("latwgs84").toString());
-            	String telefono = object.get("phone").toString();
+            	String telefono = object.get("phone").toString().replace(" ","");
             	String email = object.get("email").toString();	
             	String descripcion = object.get("documentDescription").toString();
             	ps.setString(1,nombre);
