@@ -19,7 +19,7 @@ public class XMLtoJSON {
 		// TODO Auto-generated method stub
 		int PRETTY_PRINT_INDENT_FACTOR = 4;
 		String xmlString = null;
-		String xmlFile = "C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\biblioteques (2).xml";
+		String xmlFile = "C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\CAT.xml";
 		xmlString = new String(Files.readAllBytes(Paths.get(xmlFile)));
 		org.json.JSONObject xmlJSONObj = null;
 		xmlJSONObj = XML.toJSONObject(xmlString);
@@ -28,7 +28,7 @@ public class XMLtoJSON {
 		try (FileWriter fileWriter = new FileWriter(jsonFile)){
 			fileWriter.write(xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR));
 			jsonPrettyPrintString= xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
-			//System.out.println(jsonPrettyPrintString);
+			System.out.println(jsonPrettyPrintString);
 		}
 		
 		 conexionBD conexion = new conexionBD();

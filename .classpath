@@ -5,5 +5,12 @@
 	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/java-json.jar/java-json.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib2/mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-dataformat-csv-2.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-databind-2.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-core-2.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-annotations-2.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-databind-2.13.0-rc1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-core-2.13.0-rc1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/jackson-annotations-2.13.0-rc1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

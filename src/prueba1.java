@@ -14,7 +14,7 @@ import org.json.simple.parser.JSONParser;
 
 public class prueba1 {
 	
-    private static final String JSONpath = "C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\bibliotecas.json";
+    private static final String JSONpath = "C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\EUS.json";
     
     public static void main(String[] args) throws Exception {
         
