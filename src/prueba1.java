@@ -38,9 +38,6 @@ public class prueba1 {
             	
             	ps = cn.prepareStatement(st_ins);
             	
-            	
-            	
-            	
             	String nombre = object.get("documentName").toString();  
             	String tipo = "publico";  
             	String direccion = object.get("address").toString();
@@ -73,5 +70,6 @@ public class prueba1 {
             		}
             	}catch(Exception e) {}
         }
+    	System.out.println("OK");
     }
 }
