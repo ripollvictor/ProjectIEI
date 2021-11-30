@@ -1,6 +1,7 @@
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 
@@ -32,10 +33,10 @@ public class prueba1 {
 
             for (int i = 0; i < json.size(); i++) {
             	JSONObject object =(JSONObject) json.get(i);
+            	//biblioteca
             	String st_ins = "INSERT INTO biblioteca(nombre,tipo,direccion,codPostal,longitud,latitud,telefono,email,descripción)"
                  		+ " VALUES (?,?,?,?,?,?,?,?,?)";
             	ps = cn.prepareStatement(st_ins);
-            	
             	String nombre = object.get("documentName").toString();  
             	String tipo = "publico";  
             	String direccion = object.get("address").toString();
@@ -55,13 +56,18 @@ public class prueba1 {
             	ps.setString(8,email);
             	ps.setString(9,descripcion);
             	ps.executeUpdate();
-            	
+            	//localidad
+            	String nombreL = object.get("municipality").toString(); 
+            	String cod = object.get("postalcode").toString().replace(".","").substring(2,4);
+            	if(ThisKExists(nombreL) == false) {
             	String st_ins2 = "INSERT INTO localidad(nombre,codigo)"
                  		+ " VALUES (?,?)";
             	ps = cn.prepareStatement(st_ins2);
-            	String nombreL = object.get("municipality").toString(); 
-            	String cod = object.get("postalcode").toString().replace(".","");
-            	
+            	ps.setString(1,nombreL);
+            	ps.setString(2,cod);
+            	ps.executeUpdate();
+            	}
+            	//municipio
             	
             }
             
@@ -75,5 +81,13 @@ public class prueba1 {
             	}catch(Exception e) {}
         }
     	System.out.println("OK");
+    }
+    public static boolean ThisKExists(String nombreL) {
+    	boolean b = true;
+    	
+    	
+    	
+    	
+    	return b;
     }
 }

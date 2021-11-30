@@ -70,7 +70,6 @@ public class XMLtoJSON {
 	            	ps.setString(7,telefono);
 	            	ps.setString(8,email);
 	            	ps.setString(9,descripcion);
-	            	
 	            	ps.executeUpdate();
 	            	
 	            	
