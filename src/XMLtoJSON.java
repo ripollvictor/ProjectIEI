@@ -28,7 +28,7 @@ public class XMLtoJSON {
 		try (FileWriter fileWriter = new FileWriter(jsonFile)){
 			fileWriter.write(xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR));
 			jsonPrettyPrintString= xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR);
-			System.out.println(jsonPrettyPrintString);
+			//System.out.println(jsonPrettyPrintString);
 		}
 		
 		 conexionBD conexion = new conexionBD();
@@ -42,7 +42,7 @@ public class XMLtoJSON {
 	            String response = "response";
 	            String row = "row";
 	            objXML = (JSONObject) objXML.remove(response);
-	            objXML = (JSONObject) objXML.remove(row);
+	            //objXML = (JSONObject) objXML.remove(row);
 	            String g = (objXML.remove(row)).toString();
 	            String g2 = g.replace("\",", "\", \n ");
 	            FileWriter fileWriter = new FileWriter("C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\bibliotequesNEW2.json");
@@ -63,7 +63,7 @@ public class XMLtoJSON {
 	                 		+ " VALUES (?,?,?,?,?,?,?,?,?)";
 	            	
 	            	ps = cn.prepareStatement(st_ins);
-	            //	System.out.println(object.keySet());
+	            	
 	            	String nombre = object.get("nom").toString();  
 	            	String propietats = object.get("propietats").toString();
 	            	String tipo = "Publica";
@@ -77,7 +77,7 @@ public class XMLtoJSON {
 	            	telefono = object.get("telefon1").toString();
 	            	}catch (Exception e) {}
 	            	String email = object.get("email").toString();	
-	            	String descripcion = object.get("propietats").toString().substring(0,20);
+	            	String descripcion = "X";//object.get("propietats").toString().substring(0,20);
 	            	ps.setString(1,nombre);
 	            	ps.setString(2,tipo);
 	            	ps.setString(3,direccion);
