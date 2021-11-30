@@ -32,10 +32,8 @@ public class prueba1 {
 
             for (int i = 0; i < json.size(); i++) {
             	JSONObject object =(JSONObject) json.get(i);
-            	
             	String st_ins = "INSERT INTO biblioteca(nombre,tipo,direccion,codPostal,longitud,latitud,telefono,email,descripción)"
                  		+ " VALUES (?,?,?,?,?,?,?,?,?)";
-            	
             	ps = cn.prepareStatement(st_ins);
             	
             	String nombre = object.get("documentName").toString();  
@@ -47,7 +45,6 @@ public class prueba1 {
             	String telefono = object.get("phone").toString();
             	String email = object.get("email").toString();	
             	String descripcion = object.get("documentDescription").toString();
-            	
             	ps.setString(1,nombre);
             	ps.setString(2,tipo);
             	ps.setString(3,direccion);
@@ -57,8 +54,15 @@ public class prueba1 {
             	ps.setString(7,telefono);
             	ps.setString(8,email);
             	ps.setString(9,descripcion);
-            	
             	ps.executeUpdate();
+            	
+            	String st_ins2 = "INSERT INTO localidad(nombre,codigo)"
+                 		+ " VALUES (?,?)";
+            	ps = cn.prepareStatement(st_ins2);
+            	String nombreL = object.get("municipality").toString(); 
+            	String cod = object.get("postalcode").toString().replace(".","");
+            	
+            	
             }
             
        	}catch (Exception ex) {
