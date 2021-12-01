@@ -12,6 +12,15 @@ import org.json.simple.parser.JSONParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.dataformat.csv.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.IOException;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+//import com.sun.javafx.css.StyleCache.Key;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -76,6 +85,8 @@ public class csv {
 		 Connection cn = null;
 		 Statement stm = null;
 	     ResultSet rs = null;
+	     
+	     
 	     try {
 	            JSONParser parser = new JSONParser();
 	            Object obj = parser.parse(new FileReader("C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\CV2.json"));
@@ -94,10 +105,11 @@ public class csv {
 	            	String nombre = object.get("NOMBRE").toString();  
 	            	String tipo =  object.get("DESC_CARACTER").toString();
 	            	String direccion = object.get("DIRECCION").toString();
+	            	String d = Chrome(direccion);
 	            	String codPostal = object.get("CP").toString().replace(".","");
 	            	if(codPostal.length() == 4) {codPostal = "0" + codPostal;}
-	            	Float longitud = (float) 0.0;
-	            	Float latitud = (float) 0.0;
+	            	Float longitud =  Float.valueOf(d.replace(" ","").substring(12));
+	            	Float latitud = Float.valueOf(d.replace(" ","").substring(0,8));
 	            	String telefono = object.get("TELEFONO").toString().substring(5);
 	            	String email = object.get("EMAIL").toString();	
 	            	String descripcion = object.get("TIPO").toString();
@@ -143,5 +155,53 @@ public class csv {
 	            	}catch(Exception e) {}
 	        }
 	}
+	
+		private static WebDriver driver = null;
+
+		public static String Chrome(String dir) {
+			String exePath = "C:\\Users\\Usuario\\Desktop\\chromedriver.exe";
+			System.setProperty("webdriver.chrome.driver", exePath);
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("start-maximized");
+			driver = new ChromeDriver(options);
+			driver.get("http://www.coordenadas-gps.com");
+			WebElement input =  driver.findElement(By.id("address"));
+			try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			input.clear();
+			String direccion = dir;
+			input.sendKeys(direccion);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			WebElement boton =  driver.findElement(By.xpath("//button[@onClick = 'codeAddress()']"));
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			boton.click();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			String lat = driver.findElement(By.id("latitude")).getAttribute("value");
+			String lng = driver.findElement(By.id("longitude")).getAttribute("value");
+			
+			
+			String resp = lat.toString() + "     " + lng.toString();
+			System.out.println(resp);
+			return (resp);
+		}
+
+		
+	
 }
 
