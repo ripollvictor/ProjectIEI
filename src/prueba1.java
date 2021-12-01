@@ -50,6 +50,7 @@ public class prueba1 {
             	Float longitud = Float.valueOf(object.get("lonwgs84").toString());
             	Float latitud = Float.valueOf(object.get("latwgs84").toString());
             	String telefono = object.get("phone").toString().replace(" ","");
+            	if (telefono.length() > 9) {telefono = telefono.substring(0,9);}
             	String email = object.get("email").toString().
             			replace("Ã©","é").replace("Ã³","ó").replace("Ã¡","á");	
             	String descripcion = object.get("documentDescription").toString().

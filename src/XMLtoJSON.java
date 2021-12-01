@@ -82,7 +82,7 @@ public class XMLtoJSON {
 	            	Float latitud = Float.valueOf(object.get("latitud").toString());
 	            	String telefono = "";
 	            	try {
-	            	telefono = object.get("telefon1").toString();
+	            	telefono = object.get("telefon1").toString().replace(" ","");
 	            	}catch (Exception e) {}
 	            	String email = object.get("email").toString();	
 	            	String descripcion = object.get("propietats").toString()
