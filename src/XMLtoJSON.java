@@ -64,12 +64,20 @@ public class XMLtoJSON {
 	            	
 	            	ps = cn.prepareStatement(st_ins);
 	            	
-	            	String nombre = object.get("nom").toString();  
-	            	String propietats = object.get("propietats").toString();
+	            	String nombre = object.get("nom").toString().
+	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
+	            			replace("i¨","è").replace("i²","ò");  
+	            	String propietats = object.get("propietats").toString().
+	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
+	            			replace("i¨","è").replace("i²","ò");
 	            	String tipo = "Publica";
 	            	if (propietats.contains("Privada")) {tipo = "Privada";}
-	            	String direccion = object.get("via").toString();
+	            	String direccion = object.get("via").toString().
+	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
+	            			replace("i¨","è").replace("i²","ò");
 	            	String codPostal = object.get("cpostal").toString();
+	            	if(codPostal.length() == 4) {codPostal = "0" + codPostal;}
+	            	//System.out.println(codPostal);
 	            	Float longitud = Float.valueOf(object.get("longitud").toString());
 	            	Float latitud = Float.valueOf(object.get("latitud").toString());
 	            	String telefono = "";
@@ -77,7 +85,11 @@ public class XMLtoJSON {
 	            	telefono = object.get("telefon1").toString();
 	            	}catch (Exception e) {}
 	            	String email = object.get("email").toString();	
-	            	String descripcion = "X";//object.get("propietats").toString().substring(0,20);
+	            	String descripcion = object.get("propietats").toString()
+	            			.replace("br","").replace(",","").replace(":[","")
+	            			.replace("{\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"","").replace("\"\"\"\"\"\"\"]\"content\"\"","").
+	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
+	            			replace("i¨","è").replace("i²","ò");
 	            	ps.setString(1,nombre);
 	            	ps.setString(2,tipo);
 	            	ps.setString(3,direccion);
@@ -89,17 +101,22 @@ public class XMLtoJSON {
 	            	ps.setString(9,descripcion);
 	            	ps.executeUpdate();
 	            	//localidad
-	            	String nombreL = object.get("poblacio").toString(); 
-	            	String cod = object.get("cpostal").toString().replace(".","").substring(2);
+	            	String nombreL = object.get("poblacio").toString().
+	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
+	            			replace("i¨","è").replace("i²","ò"); 
+	            	String cod = codPostal.substring(2);
 	            	String st_ins2 = "INSERT INTO localidad(nombre,codigo)"
 	                 		+ " VALUES (?,?)";
 	            	ps = cn.prepareStatement(st_ins2);
 	            	ps.setString(1,nombreL);
 	            	ps.setString(2,cod);
 	            	ps.executeUpdate();
-	            	//municipio
-	            	String nombreM = object.get("comarca").toString(); 
-	            	String codM = object.get("cpostal").toString().replace(".","").substring(0,2);
+	            	//provincia
+	            	String comarca = object.get("comarca").toString().
+	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
+	            			replace("i¨","è").replace("i²","ò"); 
+	            	String nombreM = ComarcaToProvincia(comarca);
+	            	String codM = codPostal.substring(0,2);
 	            	String st_ins3 = "INSERT INTO provincia(nombre,codigo)"
 	                 		+ " VALUES (?,?)";
 	            	ps = cn.prepareStatement(st_ins3);
@@ -121,4 +138,10 @@ public class XMLtoJSON {
 		 
 	
 }
+	public static String ComarcaToProvincia(String c) {
+		String resp = "Girona";
+		if (c.equals("Vallès Oriental") || c.equals("Bages") || c.equals("Anoia") || c.equals("Barcelonès") || c.equals("Vallès Occidental")) {resp = "Barcelona";}
+		return resp;
+	}
+	
 }

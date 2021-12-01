@@ -22,6 +22,8 @@ public class csv {
 		File input = new File("C:\\Users\\Usuario\\git\\proyectoIEI\\archivosDatos\\CV.csv");
 		try {
 			CsvSchema csv = CsvSchema.emptySchema().withHeader().withColumnSeparator(';');
+			
+			
 //			CsvMapper csvMapper = new CsvMapper();
 //			MappingIterator<OrderLine> orderLines = csvMapper.readerFor(OrderLine.class).with(csv).readValues(input);
 //			ObjectMapper mapper = new ObjectMapper();
@@ -32,8 +34,10 @@ public class csv {
 			CsvMapper csvMapper = new CsvMapper();
 			MappingIterator<Map<?, ?>> mappingIterator = csvMapper.reader().forType(Map.class).with(csv)
 					.readValues(input);
+			
 			List<Map<?, ?>> list = mappingIterator.readAll();
 			// System.out.println(list);
+			
 			String doc = list.toString().replace(", NOM_PROVINCIA=","\", \n\"NOM_PROVINCIA\" : \"")
 					.replace(", COD_MUNICIPIO=","\", \n\"COD_MUNICIPIO\" : \"").replace("COD_PROVINCIA=","\"COD_PROVINCIA\" : \"")
 					.replace(", NOM_MUNICIPIO=","\", \n\"NOM_MUNICIPIO\" : \"")
@@ -91,6 +95,7 @@ public class csv {
 	            	String tipo =  object.get("DESC_CARACTER").toString();
 	            	String direccion = object.get("DIRECCION").toString();
 	            	String codPostal = object.get("CP").toString().replace(".","");
+	            	if(codPostal.length() == 4) {codPostal = "0" + codPostal;}
 	            	Float longitud = (float) 0.0;
 	            	Float latitud = (float) 0.0;
 	            	String telefono = object.get("TELEFONO").toString().substring(5);
@@ -109,15 +114,17 @@ public class csv {
 	            	//localidad
 	            	String nombreL = object.get("NOM_MUNICIPIO").toString(); 
 	            	String cod = object.get("COD_MUNICIPIO").toString();
+	            	if(cod.length() == 2) {cod = "0" + cod;}
 	            	String st_ins2 = "INSERT INTO localidad(nombre,codigo)"
 	                 		+ " VALUES (?,?)";
 	            	ps = cn.prepareStatement(st_ins2);
 	            	ps.setString(1,nombreL);
 	            	ps.setString(2,cod);
 	            	ps.executeUpdate();
-	            	//municipio
+	            	//provincia
 	            	String nombreM = object.get("NOM_PROVINCIA").toString(); 
 	            	String codM = object.get("COD_PROVINCIA").toString();
+	            	if(codM.length() == 1) {codM = "0" + codM;}
 	            	String st_ins3 = "INSERT INTO provincia(nombre,codigo)"
 	                 		+ " VALUES (?,?)";
 	            	ps = cn.prepareStatement(st_ins3);
