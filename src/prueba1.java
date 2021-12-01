@@ -39,13 +39,14 @@ public class prueba1 {
                  		+ " VALUES (?,?,?,?,?,?,?,?,?)";
             	ps = cn.prepareStatement(st_ins);
             	String nombre = object.get("documentName").toString().
-            			replace("Ã©","é").replace("Ã³","ó").replace("Ã¡","á");        
+            			replace("Ã©","é").replace("Ã³","ó").replace("Ã¡","á").replace("Ã±","ñ");        
             	String tipo = "publico";  
-            	String direccion = object.get("address").toString().
+            	String direccion2 = object.get("address").toString().
             			replace("Ã©","é").replace("Ã³","ó").replace("Ã¡","á");
+            	String direccion = "C\\ " + direccion2.substring(0,direccion2.length()-2) ;
             	String codPostal = object.get("postalcode").toString().replace(".","").
             			replace("Ã©","é").replace("Ã³","ó").replace("Ã¡","á");          			
-            	System.out.println(codPostal);
+            	//System.out.println(codPostal);
             	Float longitud = Float.valueOf(object.get("lonwgs84").toString());
             	Float latitud = Float.valueOf(object.get("latwgs84").toString());
             	String telefono = object.get("phone").toString().replace(" ","");
@@ -73,7 +74,7 @@ public class prueba1 {
             	ps.setString(1,nombreL);
             	ps.setString(2,cod);
             	ps.executeUpdate();
-            	//municipio
+            	//provincia
             	String nombreM = object.get("territory").toString().
             			replace("Ã©","é").replace("Ã³","ó").replace("Ã¡","á"); 
             	String codM = object.get("postalcode").toString().replace(".","").substring(0,2);
