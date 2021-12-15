@@ -105,24 +105,41 @@ public class XMLtoJSON {
 	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
 	            			replace("i¨","è").replace("i²","ò"); 
 	            	String cod = codPostal.substring(2);
+	            	boolean existePK = false;
+	            	rs = stm.executeQuery ("SELECT codigo FROM localidad");
+	            	while (rs.next()) {
+	            		 String codBD =  (rs.getString("codigo"));
+	             	    if(cod.equals(codBD)){existePK = true;}	            		
+	            	}
+	            	if(existePK == false) {
 	            	String st_ins2 = "INSERT INTO localidad(nombre,codigo)"
 	                 		+ " VALUES (?,?)";
 	            	ps = cn.prepareStatement(st_ins2);
 	            	ps.setString(1,nombreL);
 	            	ps.setString(2,cod);
 	            	ps.executeUpdate();
+	            	}
 	            	//provincia
 	            	String comarca = object.get("comarca").toString().
 	            			replace("Ã©","é").replace("Ã³","ó").replace("Ã","i").
 	            			replace("i¨","è").replace("i²","ò"); 
 	            	String nombreM = ComarcaToProvincia(comarca);
 	            	String codM = codPostal.substring(0,2);
+	            	boolean existePK2 = false;
+	            	rs = stm.executeQuery ("SELECT codigo FROM provincia");
+	            	while (rs.next())
+	            	{
+	            	    String codBD2 =  (rs.getString("codigo"));
+	            	    if(codM.equals(codBD2)){existePK2 = true;}
+	            	}
+	            	if(existePK2 == false){
 	            	String st_ins3 = "INSERT INTO provincia(nombre,codigo)"
 	                 		+ " VALUES (?,?)";
 	            	ps = cn.prepareStatement(st_ins3);
 	            	ps.setString(1,nombreM);
 	            	ps.setString(2,codM);
 	            	ps.executeUpdate();
+	            	}
 	            	
 	            }
 	            System.out.println("OK");
